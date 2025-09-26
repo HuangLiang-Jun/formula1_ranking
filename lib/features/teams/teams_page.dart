@@ -12,7 +12,17 @@ class TeamsPage extends StatelessWidget {
         if (state is TeamsLoading) {
           return Center(child: CircularProgressIndicator());
         } else if (state is TeamsSuccess) {
-          return Text(state.groups);
+          return Center(
+            child: ListView.builder(
+              itemCount: state.teams.standing.standingList.length,
+              itemBuilder:(context, index) {
+                return ListTile(
+                  leading: Icon(Icons.event_seat),
+                  title: Text(state.teams.standing.standingList[index].teams.name),
+                );
+              }
+            )
+          );
         }
         return Center(child: Text('Failure'),);
       }

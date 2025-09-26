@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formula1_ranking/features/racers/racer_event.dart';
 import 'package:formula1_ranking/features/racers/racer_state.dart';
+import 'package:formula1_ranking/models/driver_standings.dart';
 import 'package:formula1_ranking/repository/f1_repository.dart';
 
 class RacerBloc extends Bloc<RacerEvent, RacerState> {
@@ -15,14 +18,19 @@ class RacerBloc extends Bloc<RacerEvent, RacerState> {
   ) async {
   emit(RacerLoading());
     try {
-      final data = await respository.getDrivers('2025');
-      if (data.isNotEmpty) {
-        print(data);
-        emit(RacerSuccess(data));
+      final jsonStr = await respository.getDrivers('2025');
+      if (jsonStr.isNotEmpty) {
+        // print(data);
+        final Map<String, dynamic> jsonData = jsonDecode(jsonStr);
+        final DriverStandingsMRData driver = DriverStandingsMRData.fromJson(
+          jsonData['MRData']
+        );
+        emit(RacerSuccess(driver));
       } else {
         emit(RacerFailure());
       }
     } catch (e) {
+      print(e);
       emit(RacerFailure());
     }
   }
