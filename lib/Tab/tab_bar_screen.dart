@@ -25,20 +25,27 @@ class _TabBarScreenState extends State<TabBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('F1 Ranking')
+        backgroundColor: Colors.black,
+        title: const Text('F1 Ranking'),
+        titleTextStyle: TextStyle(
+          color: Colors.white
+        ),
       ),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xFF0F172A),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label: 'Driver'),
           BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label: 'Team'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.red[800],
+        unselectedItemColor: Colors.white70,
         onTap: _onItemTapped,
       ),
     );

@@ -39,6 +39,9 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          theme: ThemeData(
+            splashFactory: NoSplash.splashFactory
+          ),
           home: const TabBarScreen(),
         )
       )
