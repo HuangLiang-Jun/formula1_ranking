@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formula1_ranking/features/racers/racer_bloc.dart';
+import 'package:formula1_ranking/features/racers/racer_event.dart';
 import 'package:formula1_ranking/features/racers/racer_state.dart';
+import 'package:formula1_ranking/features/racers/widgets/driver_standing_item_widget.dart';
 
-class RacerPage extends StatelessWidget {
+class RacerPage extends StatefulWidget {
+  const RacerPage({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _RacerPageState();
+  }
+}
+
+class _RacerPageState extends State<RacerPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<RacerBloc>().add(GetDriversData());
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BlocBuilder<RacerBloc, RacerState>(
       builder: (context, state) {
         if (state is RacerLoading) {
@@ -17,10 +32,7 @@ class RacerPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: state.drivers.standing.standingList.length,
               itemBuilder:(context, index) {
-                return ListTile(
-                  leading: Icon(Icons.event_seat),
-                  title: Text(state.drivers.standing.standingList[index].driver.lastName),
-                );
+                return DriverStandingWidget(standing: state.drivers.standing.standingList[index]);
               }
             )
           );

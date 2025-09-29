@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:formula1_ranking/Tab/tab_page.dart';
+import 'package:formula1_ranking/Tab/tab_bar_screen.dart';
 import 'package:formula1_ranking/features/teams/teams_bloc.dart';
 import 'package:formula1_ranking/features/racers/racer_bloc.dart';
 import 'package:formula1_ranking/repository/f1_repository.dart';
@@ -9,7 +9,6 @@ import 'package:formula1_ranking/repository/f1_repository.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assets/.env");
-
   runApp(MyApp());
 }
 // void main() {
@@ -39,10 +38,13 @@ class MyApp extends StatelessWidget {
               ),
           ),
         ],
-    child: MaterialApp(
-      home: TabPage(),
-    )
-    )
+        child: MaterialApp(
+          theme: ThemeData(
+            splashFactory: NoSplash.splashFactory
+          ),
+          home: const TabBarScreen(),
+        )
+      )
     );
   }
 }
