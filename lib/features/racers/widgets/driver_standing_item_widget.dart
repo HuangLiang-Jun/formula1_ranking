@@ -11,29 +11,43 @@ class DriverStandingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF0F172A), // 深色背景
+      color: const Color(0xFF0F172A),
       margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            // 名次
+            // position
             PositionWidget(
               position: standing.positionText
             ),
             const SizedBox(width: 12),
 
-            // 頭像
+            // avatar
             CircleAvatar(
-              backgroundColor: Colors.blue.shade700,
-              child: Text(
-                standing.driver.code, // e.g. "MV"
-                style: const TextStyle(color: Colors.white),
+              backgroundColor: Color(int.parse('0xFF${standing.team.teamColor}')),
+              child: ClipOval(
+                child: Image.network(
+                  standing.driver.avator,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Text( // Driver code
+                      standing.driver.code,
+                      style: const TextStyle(color: Colors.white),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Text(
+                      standing.driver.code, // e.g. "MV"
+                      style: const TextStyle(color: Colors.white),
+                    );
+                  },
+                ),
               ),
             ),
             const SizedBox(width: 12),
-
             // Driver name + Team
             Expanded(
               child: Column(
@@ -48,7 +62,7 @@ class DriverStandingWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'constructor.name', // e.g. Red Bull Racing
+                    standing.team.name, // e.g. Red Bull Racing
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade400,
@@ -58,7 +72,7 @@ class DriverStandingWidget extends StatelessWidget {
               ),
             ),
 
-            // 分數 Badge
+            // points
             PTSWidget(points: standing.points),
           ],
         ),

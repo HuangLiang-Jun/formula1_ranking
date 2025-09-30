@@ -4,7 +4,8 @@ class Driver {
   final String code;
   final String firstName;
   final String lastName;
-  final String avator = '';
+  String avator = '';
+
   Driver({
     required this.id,
     required this.number,
@@ -22,4 +23,6 @@ class Driver {
       lastName: json['familyName'],
     );
   }
+
+  String get fullName => '$firstName ${lastName.toUpperCase()}';
 }

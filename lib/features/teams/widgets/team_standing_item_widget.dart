@@ -11,36 +11,45 @@ class TeamStandingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF0F172A), // 深色背景
+      color: const Color(0xFF0F172A),
       margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            // 名次
+            // Psition
             PositionWidget(
               position: standing.positionText
             ),
             const SizedBox(width: 12),
             // Team
             Expanded(
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    standing.teams.name, // e.g. Max Verstappen
+                    standing.team.name, // e.g. Max Verstappen
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
+                  SizedBox(width: 12),
+                  Container(
+                    width: 20.0, // Controls the size of the dot
+                    height: 20.0,
+                    decoration: BoxDecoration(
+                      color: Color(int.parse('0xFF${standing.team.teamColor}')), // The color of the dot
+                      shape: BoxShape.circle,
+                    ),
+                  )
                 ],
               ),
             ),
 
-            // 分數 Badge
+            // Ponits
             PTSWidget(
               points: standing.points
             ),

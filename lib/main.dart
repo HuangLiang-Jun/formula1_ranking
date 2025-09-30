@@ -4,16 +4,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:formula1_ranking/Tab/tab_bar_screen.dart';
 import 'package:formula1_ranking/features/teams/teams_bloc.dart';
 import 'package:formula1_ranking/features/racers/racer_bloc.dart';
+import 'package:formula1_ranking/repository/app_data.dart';
 import 'package:formula1_ranking/repository/f1_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assets/.env");
+  await AppData().init(null);
   runApp(MyApp());
 }
-// void main() {
-//   runApp(const MyApp());
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
