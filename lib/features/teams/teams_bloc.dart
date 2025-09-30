@@ -19,7 +19,8 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   ) async {
     emit(TeamsLoading());
     try {
-      final jsonStr = await respository.getTeams('2025');
+      final year = DateTime.now().year.toString();
+      final jsonStr = await respository.getTeams(year);
       if (jsonStr.isNotEmpty) {
         final Map<String, dynamic> jsonData = jsonDecode(jsonStr);
         final TeamStandingsMRData teams = TeamStandingsMRData.fromJson(

@@ -28,7 +28,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text('F1 Ranking'),
+        title: const Text('F1 排名'),
         titleTextStyle: TextStyle(
           color: Colors.white
         ),
@@ -40,8 +40,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xFF0F172A),
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label: 'Driver'),
-          BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label: 'Team'),
+          BottomNavigationBarItem(icon: Icon(Icons.sports_motorsports), label: '車手'),
+          BottomNavigationBarItem(icon: Icon(Icons.garage), label: '車隊'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.red[800],

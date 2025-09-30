@@ -37,7 +37,8 @@ class _TeamsPageState extends State<TeamsPage> {
                 return TeamStandingWidget(
                   standing: state.teams.standing.standingList[index]
                 );
-              }
+              },
+              padding: EdgeInsets.only(bottom: 20),
             )
           );
         }

@@ -18,7 +18,8 @@ class RacerBloc extends Bloc<RacerEvent, RacerState> {
   ) async {
   emit(RacerLoading());
     try {
-      final jsonStr = await respository.getDrivers('2025');
+      final year = DateTime.now().year.toString();
+      final jsonStr = await respository.getDrivers(year);
       if (jsonStr.isNotEmpty) {
         // print(data);
         final Map<String, dynamic> jsonData = jsonDecode(jsonStr);
