@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formula1_ranking/features/teams/teams_event.dart';
 import 'package:formula1_ranking/features/teams/teams_state.dart';
 import 'package:formula1_ranking/models/team_standings.dart';
+import 'package:formula1_ranking/repository/app_data.dart';
 import 'package:formula1_ranking/repository/f1_repository.dart';
 
 class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
@@ -24,12 +25,19 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
         final TeamStandingsMRData teams = TeamStandingsMRData.fromJson(
           jsonData['MRData']
         );
+        await mergerTeamColour(teams.standing.standingList);
         emit(TeamsSuccess(teams));
       } else {
         emit(TeamsFailure('json is empty!'));
       }
     } catch (e) {
       emit(TeamsFailure('error message'));
+    }
+  }
+
+  Future<void> mergerTeamColour(List<TeamStanding> standings) async {
+    for (var s in standings) {
+      s.team.teamColor = AppData().getTeamColor(s.team.name);
     }
   }
 }

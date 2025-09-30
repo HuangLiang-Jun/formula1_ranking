@@ -1,6 +1,7 @@
 class Team {
   final String id;
   final String name;
+  String teamColor = '000000';
 
   Team({
     required this.id,

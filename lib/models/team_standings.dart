@@ -41,16 +41,9 @@ class TeamStandingsTable {
   ) {
     final List<dynamic> lists = json['StandingsLists'];
     final Map<String, dynamic> teamStandings = lists.first;
-  //   final test = teamStandings['ConstructorStandings'] as List<dynamic>;
-  //   final List<String> t = test.map((e) => 
-  //   print(e);
-  //   String('')
-  // )
-  // .toList();
     List<TeamStanding> teams = (teamStandings['ConstructorStandings'] as List<dynamic>)
       .map(
         (e) {
-          print(e);
           return TeamStanding.fromJson(e as Map<String, dynamic>);
         }
       )
@@ -67,13 +60,13 @@ class TeamStanding {
   final String position;
   final String positionText;
   final String points;
-  final Team teams;
+  final Team team;
 
   TeamStanding ({
     required this.position,
     required this.positionText,
     required this.points,
-    required this.teams,
+    required this.team,
   });
 
   factory TeamStanding.fromJson(Map<String, dynamic> json) {
@@ -81,7 +74,7 @@ class TeamStanding {
       position: json['position'],
       positionText: json['positionText'],
       points: json['points'],
-      teams: Team.fromJson (json['Constructor'] as Map<String, dynamic>),
+      team: Team.fromJson (json['Constructor'] as Map<String, dynamic>),
     );
   }
 }

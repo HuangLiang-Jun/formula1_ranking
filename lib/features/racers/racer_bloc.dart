@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formula1_ranking/features/racers/racer_event.dart';
 import 'package:formula1_ranking/features/racers/racer_state.dart';
 import 'package:formula1_ranking/models/driver_standings.dart';
+import 'package:formula1_ranking/repository/app_data.dart';
 import 'package:formula1_ranking/repository/f1_repository.dart';
 
 class RacerBloc extends Bloc<RacerEvent, RacerState> {
@@ -25,13 +25,21 @@ class RacerBloc extends Bloc<RacerEvent, RacerState> {
         final DriverStandingsMRData driver = DriverStandingsMRData.fromJson(
           jsonData['MRData']
         );
+        await mergeDriverDetail(driver.standing.standingList);
         emit(RacerSuccess(driver));
       } else {
         emit(RacerFailure());
       }
     } catch (e) {
-      print(e);
       emit(RacerFailure());
+    }
+  }
+
+  Future<void> mergeDriverDetail(List<DriverStanding> standings) async {
+    for (var s in standings) {
+      final number = int.parse(s.driver.number);
+      s.driver.avator = AppData().getDriverAvatar(s.driver.fullName, number);
+      s.team.teamColor = AppData().getDriverTeamColor(s.driver.fullName, number);
     }
   }
 }
