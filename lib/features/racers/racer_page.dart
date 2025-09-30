@@ -33,7 +33,8 @@ class _RacerPageState extends State<RacerPage> {
               itemCount: state.drivers.standing.standingList.length,
               itemBuilder:(context, index) {
                 return DriverStandingWidget(standing: state.drivers.standing.standingList[index]);
-              }
+              },
+              padding: EdgeInsets.only(bottom: 20),
             )
           );
         }

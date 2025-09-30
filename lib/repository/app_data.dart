@@ -26,10 +26,11 @@ class AppData {
   }
 
   Future<void> getLatestSession() async {
-    final res = await respository.getLatestSession('2025');
+    final String year = DateTime.now().year.toString();
+    final res = await respository.getLatestSession(year);
     final sessions = jsonDecode(res) as List<dynamic>;
     if (sessions.lastOrNull == null) {
-      latestSessionKey = 9904;
+      latestSessionKey = 9904; // 隨便抓一場比較新的 key
     } else {
       latestSessionKey = (sessions.last as Map<String, dynamic>)['session_key'] as int;
     }
