@@ -1,4 +1,5 @@
 import 'package:formula1_ranking/models/driver.dart';
+import 'package:formula1_ranking/models/team.dart';
 
 class DriverStandingsMRData {
   final int limit;
@@ -57,20 +58,30 @@ class DriverStanding {
   final String positionText;
   final String points;
   final Driver driver;
+  final Team team;
 
   DriverStanding ({
     required this.position,
     required this.positionText,
     required this.points,
     required this.driver,
+    required this.team
   });
 
   factory DriverStanding.fromJson(Map<String, dynamic> json) {
+    final teams = json['Constructors'] as List<dynamic>;
+    Team team;
+    if (teams.isEmpty) {
+      team = Team(id: '', name: '');
+    } else {
+      team = Team.fromJson(teams.first as Map<String, dynamic>);
+    }
     return DriverStanding(
       position: json['position'],
       positionText: json['positionText'],
       points: json['points'],
       driver: Driver.fromJson (json['Driver'] as Map<String, dynamic>),
+      team: team
     );
   }
 }

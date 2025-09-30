@@ -48,7 +48,7 @@ class DriverStandingWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'constructor.name', // e.g. Red Bull Racing
+                    standing.team.name, // e.g. Red Bull Racing
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade400,
