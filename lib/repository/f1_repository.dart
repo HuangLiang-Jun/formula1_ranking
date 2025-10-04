@@ -37,6 +37,14 @@ class F1Repository {
     return response.body;
   }
 
+  Future<String> getRacesResult(String year) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/$year/results')
+    );
+    _checkStatusCode(response);
+    return response.body;
+  }
+
   void _checkStatusCode(http.Response response) {
     if (response.statusCode != 200) {
       throw Exception('${response.request?.url.toString() ?? 'some api request'} error!');
