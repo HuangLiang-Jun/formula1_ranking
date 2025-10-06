@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:formula1_ranking/Tab/tab_bar_screen.dart';
+import 'package:formula1_ranking/features/race_result/race_result_bloc.dart';
 import 'package:formula1_ranking/features/teams/teams_bloc.dart';
 import 'package:formula1_ranking/features/racers/racer_bloc.dart';
 import 'package:formula1_ranking/repository/app_data.dart';
@@ -33,6 +34,12 @@ class MyApp extends StatelessWidget {
           BlocProvider<TeamsBloc>(
             create:(context) =>
               TeamsBloc(
+                respository: context.read<F1Repository>()
+              ),
+          ),
+          BlocProvider<RaceResultBloc>(
+            create:(context) =>
+              RaceResultBloc(
                 respository: context.read<F1Repository>()
               ),
           ),

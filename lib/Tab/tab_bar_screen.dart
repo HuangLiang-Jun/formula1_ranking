@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:formula1_ranking/features/race_result/race_result_page.dart';
 import 'package:formula1_ranking/features/teams/teams_page.dart';
 import 'package:formula1_ranking/features/racers/racer_page.dart';
 
@@ -14,6 +15,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
   static final List<Widget> _widgetOptions = <Widget>[
     RacerPage(), // Bloc 已經在上層提供
     TeamsPage(),
+    RaceResultPage()
   ];
 
   void _onItemTapped(int index) {
@@ -42,6 +44,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.sports_motorsports), label: '車手'),
           BottomNavigationBarItem(icon: Icon(Icons.garage), label: '車隊'),
+          BottomNavigationBarItem(icon: Icon(Icons.location_on), label: '賽事')
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.red[800],
