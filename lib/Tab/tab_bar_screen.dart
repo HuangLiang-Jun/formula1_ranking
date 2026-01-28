@@ -13,7 +13,7 @@ class TabBarScreen extends StatefulWidget {
 class _TabBarScreenState extends State<TabBarScreen> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
-    RacerPage(), // Bloc 已經在上層提供
+    RacerPage(),
     TeamsPage(),
     RaceResultPage()
   ];

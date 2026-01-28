@@ -8,11 +8,11 @@ import 'package:formula1_ranking/repository/f1_repository.dart';
 class RaceResultBloc extends Bloc<RaceResultEvent, RaceResultState> {
   final F1Repository respository;
   RaceResultBloc({ required this.respository }) : super(RaceResultInitial()) {
-    on<GetRacesResult>(_onGetRacesResultData);
+    on<GetRaceResults>(_onGetRacesResultData);
   }
 
   Future<void> _onGetRacesResultData(
-    GetRacesResult event,
+    GetRaceResults event,
     Emitter<RaceResultState> emit,
   ) async {
   emit(RaceResultLoading());
