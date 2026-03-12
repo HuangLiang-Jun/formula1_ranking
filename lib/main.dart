@@ -10,8 +10,12 @@ import 'package:formula1_ranking/repository/f1_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "assets/.env");
-  await AppData().init(null);
+  try {
+    await dotenv.load(fileName: "assets/.env");
+    await AppData().init(null);
+  } catch (e) {
+    debugPrint("Initialization error: $e");
+  }
   runApp(MyApp());
 }
 

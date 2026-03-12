@@ -18,10 +18,10 @@ class DriverStandingsMRData {
       Map<String, dynamic> json
     ) {
     return DriverStandingsMRData(
-      limit: int.tryParse(json['limit']) ?? 0,
-      offset: int.tryParse(json['offset']) ?? 0,
-      total: int.tryParse(json['total']) ?? 0,
-      standing: DriverStandingsTable.fromJson(json['StandingsTable'] as Map<String, dynamic>)
+      limit: int.tryParse(json['limit']?.toString() ?? '0') ?? 0,
+      offset: int.tryParse(json['offset']?.toString() ?? '0') ?? 0,
+      total: int.tryParse(json['total']?.toString() ?? '0') ?? 0,
+      standing: DriverStandingsTable.fromJson(json['StandingsTable'] as Map<String, dynamic>? ?? {})
     );
   }
 }
@@ -40,13 +40,21 @@ class DriverStandingsTable {
   factory DriverStandingsTable.fromJson(
     Map<String, dynamic> json,
   ) {
-    final Map<String, dynamic> lists = json['StandingsLists'].first;
-    List<DriverStanding> teams = (lists['DriverStandings'] as List<dynamic>)
+    final standingLists = json['StandingsLists'] as List<dynamic>?;
+    if (standingLists == null || standingLists.isEmpty) {
+      return DriverStandingsTable(
+        season: json['season'] ?? '',
+        round: json['round'] ?? '',
+        standingList: []
+      );
+    }
+    final Map<String, dynamic> lists = standingLists.first;
+    List<DriverStanding> teams = (lists['DriverStandings'] as List<dynamic>? ?? [])
       .map((e) => DriverStanding.fromJson(e as Map<String, dynamic>))
       .toList();
       return DriverStandingsTable(
-        season: json['season'],
-        round: json['round'],
+        season: json['season'] ?? '',
+        round: json['round'] ?? '',
         standingList: teams
         );
     }
@@ -77,7 +85,7 @@ class DriverStanding {
       team = Team.fromJson(teams.first as Map<String, dynamic>);
     }
     return DriverStanding(
-      position: json['position'],
+      position: json['position'] ?? "-",
       positionText: json['positionText'],
       points: json['points'],
       driver: Driver.fromJson (json['Driver'] as Map<String, dynamic>),

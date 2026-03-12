@@ -38,7 +38,12 @@ class _RacerPageState extends State<RacerPage> {
             )
           );
         }
-        return Center(child: Text('Failure'),);
+        return Center(
+          child: Text(
+            '無法載入資料，請檢查網路連接。',
+            style: TextStyle(color: Colors.white),
+          ),
+        );
       }
     );
   }
