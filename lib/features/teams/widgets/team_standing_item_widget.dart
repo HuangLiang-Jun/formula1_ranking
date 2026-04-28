@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:formula1_ranking/features/widgets/position_widget.dart';
-import 'package:formula1_ranking/features/widgets/pts_widget.dart';
+import 'package:formula1_ranking/widgets/position_widget.dart';
+import 'package:formula1_ranking/widgets/pts_widget.dart';
 import 'package:formula1_ranking/models/team_standings.dart';
 
 class TeamStandingWidget extends StatelessWidget {

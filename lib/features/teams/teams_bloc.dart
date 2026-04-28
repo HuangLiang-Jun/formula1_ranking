@@ -32,6 +32,7 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
         emit(TeamsFailure('json is empty!'));
       }
     } catch (e) {
+      print("General error in Team block: $e");
       emit(TeamsFailure('error message'));
     }
   }

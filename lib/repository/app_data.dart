@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter/foundation.dart';
 import 'package:formula1_ranking/models/open_f1_driver.dart';
 import 'package:formula1_ranking/repository/f1_repository.dart';
 
@@ -9,30 +9,44 @@ class AppData {
   factory AppData() => _instance;
   AppData._internal();
 
-  late List<Openf1Driver> drivers;
-  late int latestSessionKey;
+  late List<Openf1Driver> drivers = [];
+  late int latestSessionKey = 9904;
   Map<String, String> teamColors = {};
 
   Future<void> init(F1Repository? repo) async {
     respository = repo ?? F1Repository();
-    await getLatestSession();
-    final res = await respository.getDriverAvatar(latestSessionKey);
-    drivers = (jsonDecode(res) as List<dynamic>)
-      .map((e) => Openf1Driver.fromJson(e as Map<String, dynamic>))
-      .toList();
-    for (Openf1Driver driver in drivers) {
-      teamColors[driver.teamName] = driver.teamColor;
+    try {
+      await getLatestSession();
+      final res = await respository.getDriverAvatar(latestSessionKey);
+      final decoded = jsonDecode(res);
+      if (decoded is List) {
+        drivers = decoded
+          .map((e) => Openf1Driver.fromJson(e as Map<String, dynamic>))
+          .toList();
+        for (Openf1Driver driver in drivers) {
+          teamColors[driver.teamName] = driver.teamColor;
+        }
+      }
+    } catch (e) {
+      debugPrint("AppData init error: $e");
+      // Keep defaults if failed
     }
   }
 
   Future<void> getLatestSession() async {
-    final String year = DateTime.now().year.toString();
-    final res = await respository.getLatestSession(year);
-    final sessions = jsonDecode(res) as List<dynamic>;
-    if (sessions.lastOrNull == null) {
-      latestSessionKey = 9904; // 隨便抓一場比較新的 key
-    } else {
-      latestSessionKey = (sessions.last as Map<String, dynamic>)['session_key'] as int;
+    try {
+      final String year = DateTime.now().year.toString();
+      final res = await respository.getLatestSession(year);
+      final sessions = jsonDecode(res);
+      if (sessions is List && sessions.isNotEmpty) {
+        final lastSession = sessions.last as Map<String, dynamic>;
+        latestSessionKey = lastSession['session_key'] as int? ?? 9904;
+      } else {
+        latestSessionKey = 9904;
+      }
+    } catch (e) {
+      debugPrint("getLatestSession error: $e");
+      latestSessionKey = 9904;
     }
   }
 
